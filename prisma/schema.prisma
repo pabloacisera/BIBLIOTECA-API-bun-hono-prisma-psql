@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Book {
+  id          Int      @id @default(autoincrement())
+  title       String
+  author      String
+  year        Int
+  isAvailable Boolean  @default(true) // Indica si el libro está disponible para préstamo
+  loans       Loan[]   // Relación con los préstamos de este libro
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Member {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  phone     String?
+  loans     Loan[]   // Relación con los préstamos de este socio
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Loan {
+  id          Int      @id @default(autoincrement())
+  bookId      Int
+  book        Book     @relation(fields: [bookId], references: [id])
+  memberId    Int
+  member      Member   @relation(fields: [memberId], references: [id])
+  loanDate    DateTime @default(now()) // Fecha de préstamo
+  returnDate  DateTime? // Fecha de devolución (null si no se ha devuelto)
+  isReturned  Boolean  @default(false) // Indica si el libro ha sido devuelto
+  return      Return?  // Relación con la devolución (opcional)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Return {
+  id        Int      @id @default(autoincrement())
+  loanId    Int      @unique // Campo único para la relación uno a uno
+  loan      Loan     @relation(fields: [loanId], references: [id])
+  returnDate DateTime @default(now()) // Fecha de devolución
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
