@@ -8,6 +8,7 @@ import { serve, setup } from 'swagger-ui-express'
 import bookRoutes from './src/routes/BookRoutes'
 import memberRoutes from './src/routes/memberRoutes'
 import loanRoutes from './src/routes/loanRoutes'
+import returnRoutes from './src/routes/returnRoutes'
 
 config();
 
@@ -70,6 +71,7 @@ app.get('/docs', (c)=> {
 app.route('/api/books', bookRoutes)
 app.route('/api/members', memberRoutes)
 app.route('/api/loans', loanRoutes)
+app.route('/api/returns', returnRoutes)
 
 export default{
   port: PORT,
