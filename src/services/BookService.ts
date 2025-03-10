@@ -39,6 +39,7 @@ class BookService {
     return await prisma.book.delete({
       where: { id }
     })
+  
   }
 
 }

@@ -1,9 +1,13 @@
 import { Hono } from 'hono'
 import { config } from 'dotenv';
-import bookRoutes from './src/routes/BookRoutes'
+
 import swaggerJSDoc from 'swagger-jsdoc'
 import { serve, setup } from 'swagger-ui-express'
+
+//rutas
+import bookRoutes from './src/routes/BookRoutes'
 import memberRoutes from './src/routes/memberRoutes'
+import loanRoutes from './src/routes/loanRoutes'
 
 config();
 
@@ -65,6 +69,7 @@ app.get('/docs', (c)=> {
 //routes
 app.route('/api/books', bookRoutes)
 app.route('/api/members', memberRoutes)
+app.route('/api/loans', loanRoutes)
 
 export default{
   port: PORT,

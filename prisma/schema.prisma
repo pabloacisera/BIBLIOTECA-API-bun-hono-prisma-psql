@@ -12,6 +12,7 @@ model Book {
   title       String
   author      String
   year        Int
+  quantity    Int
   isAvailable Boolean  @default(true) // Indica si el libro está disponible para préstamo
   loans       Loan[]   // Relación con los préstamos de este libro
   createdAt   DateTime @default(now())
